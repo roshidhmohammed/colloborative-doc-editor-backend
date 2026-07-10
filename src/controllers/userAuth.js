@@ -83,7 +83,7 @@ export const login = async (req, res, next) => {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       secure: false, // true only in production HTTPS
   sameSite: "lax",
-  path:"/"
+  // path:"/"
     });
 
     res.status(200).json({
