@@ -77,13 +77,14 @@ export const login = async (req, res, next) => {
       process.env.JWT_SECRET,
       { expiresIn: '7d' },
     );
+    const isProduction = process.env.NODE_ENV === "production" || process.env.NODE_ENV === "testing"
 
     res.cookie("token", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      secure: false, // true only in production HTTPS
-  sameSite: "lax",
-  // path:"/"
+      secure: isProduction, // true only in production HTTPS
+  sameSite: isProduction ? "none" : "lax",
+  path:"/"
     });
 
     res.status(200).json({
