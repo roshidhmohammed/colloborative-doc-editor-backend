@@ -84,8 +84,7 @@ export const login = async (req, res, next) => {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       secure: isProduction, // true only in production HTTPS
   sameSite: isProduction ? "none" : "lax",
-  path:"/",
-  domain:"colloborative-document-editor-front.vercel.app"
+  path:"/"
     });
 
     res.status(200).json({
