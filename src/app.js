@@ -9,7 +9,7 @@ import documentRouter from "./routes/document.js";
 const app = express()
 
 app.use(cors({
-    origin:["http://localhost:3000", "https://colloborative-doc-editor-frontend-7dvjurait.vercel.app"],
+    origin:["http://localhost:3000", "https://colloborative-document-editor-front.vercel.app"],
     credentials:true
 }))
 app.use(cookieParser())
