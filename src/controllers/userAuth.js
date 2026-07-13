@@ -85,7 +85,7 @@ export const login = async (req, res, next) => {
       secure: isProduction, // true only in production HTTPS
   sameSite: isProduction ? "none" : "lax",
   path:"/",
-  domain:"https://colloborative-document-editor-front.vercel.app"
+  domain:"colloborative-document-editor-front.vercel.app"
     });
 
     res.status(200).json({
