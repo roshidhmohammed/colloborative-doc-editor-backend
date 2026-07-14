@@ -12,10 +12,12 @@ const getTokenFromCookies = (cookieHeader = '') => {
 
 const getTokenFromSocket = (socket) => {
   const authToken = socket.handshake.auth?.token;
+  console.log("auth", socket.handshake.auth)
+    console.log("token", socket.handshake.auth?.token)
   if (authToken) {
-    return authToken.startsWith('Bearer ') ? authToken.slice(7) : authToken;
+    return authToken.startsWith('Bearer') ? authToken.slice(7) : authToken;
   }
-
+console.log(getTokenFromCookies(socket.handshake.headers.cookie))
   return getTokenFromCookies(socket.handshake.headers.cookie);
 };
 
