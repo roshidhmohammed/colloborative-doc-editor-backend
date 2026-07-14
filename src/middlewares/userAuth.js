@@ -4,6 +4,7 @@ import prisma from "../config/prisma.js";
 
 const isUserAuthenticated = async (req, res, next) => {
   const { token } = req.cookies;
+  console.log(req.cookies)
   try {
     if (!token) {
       return next(new AppError("Please login again", 401));
