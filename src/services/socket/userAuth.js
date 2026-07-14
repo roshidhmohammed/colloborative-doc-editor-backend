@@ -17,7 +17,7 @@ const getTokenFromSocket = (socket) => {
   if (authToken) {
     return authToken.startsWith('Bearer') ? authToken.slice(7) : authToken;
   }
-console.log(getTokenFromCookies(socket.handshake.headers.cookie))
+console.log(getTokenFromCookies("cookie-token", socket.handshake.headers.cookie))
   return getTokenFromCookies(socket.handshake.headers.cookie);
 };
 

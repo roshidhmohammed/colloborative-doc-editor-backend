@@ -12,7 +12,7 @@ const initializeSocket = (server) => {
       credentials: true,
     },
   });
-
+console.log(process.env.CLIENT_URL)
   io.users = [];
 
   
