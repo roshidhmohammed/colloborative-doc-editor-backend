@@ -79,16 +79,17 @@ export const login = async (req, res, next) => {
     );
     const isProduction = process.env.NODE_ENV === "production" || process.env.NODE_ENV === "testing"
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      secure: isProduction, // true only in production HTTPS
-  sameSite: isProduction ? "none" : "lax",
-  path:"/"
-    });
+  //   res.cookie("token", token, {
+  //     httpOnly: true,
+  //     expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  //     secure: isProduction, // true only in production HTTPS
+  // sameSite: isProduction ? "none" : "lax",
+  // path:"/"
+  //   });
 
     res.status(200).json({
       success: true,
+      token,
       message: "Login successful",
       data: {
         id: user.id,
