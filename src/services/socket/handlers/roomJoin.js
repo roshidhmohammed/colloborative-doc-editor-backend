@@ -1,13 +1,12 @@
 const registerRoomJoinHandler = (socket) => {
-
-  socket.on('room:join', (roomId, callback) => {
+  socket.on("room:join", (roomId, callback) => {
     if (!roomId) {
-      callback?.({ success: false, message: 'Room ID is required' });
+      callback?.({ success: false, message: "Room ID is required" });
       return;
     }
 
     socket.join(roomId);
-    socket.to(roomId).emit('room:user-joined', {
+    socket.to(roomId).emit("room:user-joined", {
       roomId,
       user: socket.user,
     });

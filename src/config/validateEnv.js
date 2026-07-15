@@ -1,9 +1,4 @@
-const requiredVariables = [
-    "NODE_ENV",
-  "PORT",
-  "DATABASE_URL",
-  "JWT_SECRET"
-];
+const requiredVariables = ["NODE_ENV", "PORT", "DATABASE_URL", "JWT_SECRET"];
 
 requiredVariables.forEach((key) => {
   if (!process.env[key]) {

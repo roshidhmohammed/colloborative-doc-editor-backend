@@ -15,10 +15,6 @@ export const create = async (req, res, next) => {
       return next(new AppError("Document name is required", 400));
     }
 
-    // if (typeof content !== "string") {
-    //   return next(new AppError("Document content must be a string", 400));
-    // }
-
     const document = await prisma.document.create({
       data: {
         name: topic.trim(),
@@ -45,20 +41,14 @@ export const create = async (req, res, next) => {
       },
     });
 
-        const share = await createShareLink(
-        document.id,
-        req.user.id
-    );
-    console.log(share)
-    console.log(document)
+    const share = await createShareLink(document.id, req.user.id);
 
-    const ownerToken = share.ownerShareLink.token
-    console.log(ownerToken)
+    const ownerToken = share.ownerShareLink.token;
 
     res.status(201).json({
       success: true,
       message: "Document created successfully",
-      data: {document, ownerToken},
+      data: { document, ownerToken },
     });
   } catch (error) {
     return next(error);
@@ -99,10 +89,7 @@ export const getAll = async (req, res, next) => {
         shareLinks: {
           where: {
             isActive: true,
-            OR: [
-              { expiresAt: null },
-              { expiresAt: { gt: new Date() } },
-            ],
+            OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
           },
           select: {
             role: true,
@@ -307,11 +294,8 @@ export const getByDocumentToken = async (req, res, next) => {
 export const assignCollaborator = async (req, res, next) => {
   try {
     const { documentId } = req.params;
-    const {  role = "EDITOR" } = req.body;
-    const userId= req.user.id
-
-
- 
+    const { role = "EDITOR" } = req.body;
+    const userId = req.user.id;
 
     if (!documentId) {
       return next(new AppError("Document id is required", 400));
@@ -324,20 +308,11 @@ export const assignCollaborator = async (req, res, next) => {
     const normalizedRole =
       typeof role === "string" ? role.trim().toUpperCase() : "";
 
-    if (![
-      "EDITOR",
-      "VIEWER",
-    ].includes(normalizedRole)) {
+    if (!["EDITOR", "VIEWER"].includes(normalizedRole)) {
       return next(
         new AppError("Collaborator role must be EDITOR or VIEWER", 400),
       );
     }
-
-    // if (userId === req.user.id) {
-    //   return next(
-    //     new AppError("Document owner cannot be added as a collaborator", 400),
-    //   );
-    // }
 
     const [document, collaboratorUser] = await Promise.all([
       prisma.document.findUnique({
@@ -361,7 +336,6 @@ export const assignCollaborator = async (req, res, next) => {
     if (!document) {
       return next(new AppError("Document not found", 404));
     }
-
 
     if (!collaboratorUser) {
       return next(new AppError("Collaborator user not found", 404));
@@ -470,59 +444,50 @@ export const getCollaborators = async (req, res, next) => {
   }
 };
 export const acceptShareLink = async (req, res) => {
-try {
-  
-  const { token } = req.params;
+  try {
+    const { token } = req.params;
 
-  const userId = req.user.id;
+    const userId = req.user.id;
 
-  const share = await prisma.documentShareLink.findUnique({
+    const share = await prisma.documentShareLink.findUnique({
       where: {
-          token
+        token,
       },
       include: {
-          document: true
-      }
-  });
+        document: true,
+      },
+    });
 
-  if (!share)
-      throw new Error("Invalid Link");
+    if (!share) throw new Error("Invalid Link");
 
-  if (!share.isActive)
-      throw new Error("Link expired");
+    if (!share.isActive) throw new Error("Link expired");
 
-  if (
-      share.expiresAt &&
-      share.expiresAt < new Date()
-  ) {
+    if (share.expiresAt && share.expiresAt < new Date()) {
       throw new Error("Share link expired");
-  }
+    }
 
-  const alreadyJoined =
-      await prisma.documentCollaborator.findFirst({
-          where: {
-              documentId: share.documentId,
-              userId
-          }
-      });
+    const alreadyJoined = await prisma.documentCollaborator.findFirst({
+      where: {
+        documentId: share.documentId,
+        userId,
+      },
+    });
 
-  if (!alreadyJoined) {
-
+    if (!alreadyJoined) {
       await prisma.documentCollaborator.create({
-          data: {
-              documentId: share.documentId,
-              userId,
-              role: share.role
-          }
+        data: {
+          documentId: share.documentId,
+          userId,
+          role: share.role,
+        },
       });
+    }
 
-  }
-
-  return res.json({
+    return res.json({
       success: true,
-      documentId: share.documentId
-  });
-} catch (error) {
-  return next(error);
-}
+      documentId: share.documentId,
+    });
+  } catch (error) {
+    return next(error);
+  }
 };

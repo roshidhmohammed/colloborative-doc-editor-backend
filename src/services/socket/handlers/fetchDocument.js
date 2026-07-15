@@ -1,9 +1,7 @@
-import prisma from '../../../config/prisma.js';
+import prisma from "../../../config/prisma.js";
 import * as Y from "yjs";
 
 import { documentManager } from "../../yjs/documentManager.js";
-
-
 
 // db
 export const documentService = {
@@ -32,9 +30,9 @@ export const documentService = {
 };
 
 const registerFetchDocumentHandler = (socket) => {
-  socket.on('document:fetch', async (documentId, callback) => {
+  socket.on("document:fetch", async (documentId, callback) => {
     try {
-   socket.join(documentId);
+      socket.join(documentId);
 
       const managed = documentManager.get(documentId);
 

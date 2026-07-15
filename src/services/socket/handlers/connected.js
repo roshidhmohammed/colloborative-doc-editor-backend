@@ -1,5 +1,5 @@
 const registerConnectedHandler = (socket) => {
-  socket.emit('connected', {
+  socket.emit("connected", {
     socketId: socket.id,
     user: socket.user,
   });

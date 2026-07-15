@@ -1,9 +1,9 @@
-import { Server } from 'socket.io';
-import authorizeSocket from './userAuth.js';
-import registerSocketHandlers from './handlers/index.js';
-import { documentService } from './handlers/fetchDocument.js';
+import { Server } from "socket.io";
+import authorizeSocket from "./userAuth.js";
+import registerSocketHandlers from "./handlers/index.js";
+import { documentService } from "./handlers/fetchDocument.js";
 import * as Y from "yjs";
-import { documentManager } from '../yjs/documentManager.js';
+import { documentManager } from "../yjs/documentManager.js";
 
 const initializeSocket = (server) => {
   const io = new Server(server, {
@@ -12,17 +12,13 @@ const initializeSocket = (server) => {
       credentials: true,
     },
   });
-console.log(process.env.CLIENT_URL)
   io.users = [];
 
-  
   io.use(authorizeSocket(io));
 
-
-
-   io.on("connection", (socket) => {
+  io.on("connection", (socket) => {
     console.log("Connected", socket.id);
-     registerSocketHandlers(io, socket)
+    registerSocketHandlers(io, socket);
   });
 
   return io;

@@ -8,16 +8,10 @@ import app from "./app.js";
 import prisma from "./config/prisma.js";
 import initializeSocket from "./services/socket/index.js";
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-
-// const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : process.env.NODE_ENV === 'testing' ? '.env.testing' : '.env.development';
-// dotenv.config({path:path.join(process.cwd(), envFile)})
 import "./config/env.js";
 import "./config/validateEnv.js";
 
 const PORT = process.env.PORT;
-console.log(PORT);
 
 // Test Prisma connection
 async function testPrismaConnection() {

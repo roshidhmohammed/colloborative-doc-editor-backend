@@ -1,9 +1,7 @@
 import * as Y from "yjs";
 
-
-
 class DocumentManager {
-   documents = new Map();
+  documents = new Map();
 
   get(documentId) {
     let managed = this.documents.get(documentId);

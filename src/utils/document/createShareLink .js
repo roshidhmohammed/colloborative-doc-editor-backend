@@ -1,4 +1,4 @@
-import  prisma  from "../../config/prisma.js";
+import prisma from "../../config/prisma.js";
 import { generateShareToken } from "./shareToken.js";
 
 export const createShareLink = async (documentId, createdById) => {
@@ -6,7 +6,7 @@ export const createShareLink = async (documentId, createdById) => {
   const viewerToken = generateShareToken();
   const ownerToken = generateShareToken();
 
-    const ownerShareLink = await prisma.documentShareLink.create({
+  const ownerShareLink = await prisma.documentShareLink.create({
     data: {
       token: ownerToken,
       role: "OWNER",
@@ -36,6 +36,6 @@ export const createShareLink = async (documentId, createdById) => {
   return {
     editorShareLink,
     viewerShareLink,
-    ownerShareLink
+    ownerShareLink,
   };
 };

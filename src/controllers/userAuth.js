@@ -1,12 +1,11 @@
 import AppError from "../middlewares/appError.js";
 import bcrypt from "bcrypt";
-import prisma from '../config/prisma.js';
-import jwt from 'jsonwebtoken';
+import prisma from "../config/prisma.js";
+import jwt from "jsonwebtoken";
 
 export const register = async (req, res, next) => {
   try {
     const { email, password, fullName } = req.body;
-    console.log(email)
 
     if (!email || !password) {
       return next(new AppError("Email and password are required", 400));
@@ -49,9 +48,6 @@ export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    console.log(email)
-    console.log(password)
-
     if (!email || !password) {
       return next(new AppError("Email and password are required", 400));
     }
@@ -75,17 +71,11 @@ export const login = async (req, res, next) => {
         fullName: user.fullName,
       },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' },
+      { expiresIn: "7d" },
     );
-    const isProduction = process.env.NODE_ENV === "production" || process.env.NODE_ENV === "testing"
-
-  //   res.cookie("token", token, {
-  //     httpOnly: true,
-  //     expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-  //     secure: isProduction, // true only in production HTTPS
-  // sameSite: isProduction ? "none" : "lax",
-  // path:"/"
-  //   });
+    const isProduction =
+      process.env.NODE_ENV === "production" ||
+      process.env.NODE_ENV === "testing";
 
     res.status(200).json({
       success: true,
@@ -130,4 +120,3 @@ export const checkUserAuthentication = async (req, res, next) => {
     return next(error);
   }
 };
-
