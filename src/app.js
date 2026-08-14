@@ -2,9 +2,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import cors from "cors";
 import errorHandler from "./middlewares/errorHandler.js";
-import userAuthRouter from "./routes/userAuth.js";
-import userRouter from "./routes/user.js";
-import documentRouter from "./routes/document.js";
+import dbRouter from "./routes/db.js";
 
 const app = express();
 
@@ -34,9 +32,8 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-app.use("/api/auth", userAuthRouter);
-app.use("/api/user", userRouter);
-app.use("/api/document", documentRouter);
+
+app.use("/api/db", dbRouter);
 
 app.use(errorHandler);
 

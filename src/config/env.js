@@ -5,7 +5,9 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const env = process.env.NODE_ENV || "production";
+const env = process.env.NODE_ENV;
+
+console.log("env", env)
 
 const envFiles = {
   development: "../../.env.development",

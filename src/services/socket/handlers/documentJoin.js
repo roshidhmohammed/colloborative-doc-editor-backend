@@ -1,10 +1,16 @@
 import { documentManager } from "../../yjs/documentManager.js";
-import { documentService } from "./fetchDocument.js";
+import { documentService } from "../utils/fetchDocument.js";
 import * as Y from "yjs";
+import { addUser } from "../utils/addUser.js";
+import { broadcastCollaborators } from "../utils/broadcastCollaborators.js";
 
-const documentJoinHandler = (socket) => {
+const documentJoinHandler = (io, socket) => {
   socket.on("document:join", async (documentId) => {
+    console.log("1 document:join called")
     socket.join(documentId);
+    addUser(documentId, socket);
+    await broadcastCollaborators(io, documentId);
+
     const managed = documentManager.get(documentId);
 
     if (!managed.initialized) {

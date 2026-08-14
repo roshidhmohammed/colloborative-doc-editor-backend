@@ -1,12 +1,13 @@
-import prisma from "../../../config/prisma.js";
 import * as Y from "yjs";
-import { documentService } from "./fetchDocument.js";
+import { documentService } from "../utils/fetchDocument.js";
 import { documentManager } from "../../yjs/documentManager.js";
 
 const registerUpdateDocumentHandler = (socket) => {
   socket.on("document:update", async (payload = {}, callback) => {
+    console.log(" 3 document:update called")
     try {
       const { documentId, content } = payload;
+      const update = content instanceof Uint8Array ? content : new Uint8Array(content);
 
       const managed = documentManager.get(documentId);
 
@@ -17,6 +18,8 @@ const registerUpdateDocumentHandler = (socket) => {
       const state = Y.encodeStateAsUpdate(managed.ydoc);
 
       await documentService.save(documentId, state);
+
+      callback?.({ success: true });
     } catch (error) {
       callback?.({ success: false, message: error.message });
     }

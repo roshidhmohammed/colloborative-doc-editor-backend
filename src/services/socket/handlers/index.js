@@ -1,19 +1,15 @@
-import registerConnectedHandler from './connected.js';
-import registerFetchDocumentHandler from './fetchDocument.js';
 import registerRoomLeaveHandler from './roomLeave.js';
 import registerUpdateDocumentHandler from './updateDocument.js';
 import documentJoinHandler from "./documentJoin.js"
 import disconnectHandler from "./disconnect.js"
-import documentUpdateHandler from "./documentUpdate.js"
+import collaboratorOnlineStatusHandler from './collaboratorOnlineStatus.js';
 
 const registerSocketHandlers = (io, socket) => {
-  registerConnectedHandler(socket);
-  documentJoinHandler(socket);
-  disconnectHandler(socket);
-  documentUpdateHandler(socket);
-  registerRoomLeaveHandler(socket);
-  registerFetchDocumentHandler(socket);
+  documentJoinHandler(io, socket);
+  disconnectHandler(io, socket);
+  registerRoomLeaveHandler(io, socket);
   registerUpdateDocumentHandler(socket);
+  collaboratorOnlineStatusHandler(io, socket)
 };
 
 export default registerSocketHandlers;

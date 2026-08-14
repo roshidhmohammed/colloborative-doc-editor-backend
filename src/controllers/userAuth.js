@@ -4,6 +4,7 @@ import prisma from "../config/prisma.js";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res, next) => {
+  console.log("called register")
   try {
     const { email, password, fullName } = req.body;
 

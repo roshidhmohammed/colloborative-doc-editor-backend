@@ -4,7 +4,7 @@ import DATABASE_URL from "../config/env.js";
 
 const connectionString = DATABASE_URL.DATABASE_URL;
 
-const adapter = new PrismaPg({ connectionString });
+const adapter = new PrismaPg({ connectionString, max: 2 });
 const prisma = new PrismaClient({ adapter });
 
 export default prisma;
