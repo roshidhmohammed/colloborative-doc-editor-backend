@@ -28,7 +28,7 @@ app.get("/env", (req, res) => {
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({
-    message: "Server is healthy 1.0",
+    message: "Server is healthy 1.1",
   });
 });
 
