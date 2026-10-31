@@ -44,7 +44,7 @@ cd colloborative-doc-editor-backend
 ```bash
 NODE_ENV="development" || "production" || "testing"
 PORT=
-DATABASE_URL="postgresql://postgres:admin75111@localhost:5433/colloborative-doc-editor?schema=public"
+DATABASE_URL=""
 JWT_SECRET=""
 CLIENT_URL=""
 ```
